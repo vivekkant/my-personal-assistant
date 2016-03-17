@@ -3,7 +3,8 @@
  */
 package org.weekendsoft.mpa.entity;
 
-import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +19,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "currency")
-public class Currency implements Serializable, Comparable<Currency> {
+public class Currency extends BaseEntity implements Comparable<Currency> {
 
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @Column(name = "currency_id")
     private String id ;
@@ -52,9 +53,9 @@ public class Currency implements Serializable, Comparable<Currency> {
     }
     
     public Currency() {
-        // Default
+        // default
     }
-
+    
     public String getId() {
         return id ;
     }
@@ -94,5 +95,18 @@ public class Currency implements Serializable, Comparable<Currency> {
         else {
             return this.id.compareTo( currency.id ) ;
         }
+    }
+    
+    public static List<Currency> getAll() throws Exception {
+        if ( !init ) init() ;
+        List<Currency> currencies = em.createQuery( "from Currency", Currency.class ).getResultList() ;
+        Collections.sort( currencies ) ;
+        return currencies ;
+    }
+    
+    public static Currency get( String id ) throws Exception {
+        if ( !init ) init() ;
+        Currency currency = em.find( Currency.class, id ) ;
+        return currency ;
     }
 }
