@@ -97,16 +97,23 @@ public class Currency extends BaseEntity implements Comparable<Currency> {
         }
     }
     
-    public static List<Currency> getAll() throws Exception {
+    public List<Currency> getAll() throws Exception {
         if ( !init ) init() ;
         List<Currency> currencies = em.createQuery( "from Currency", Currency.class ).getResultList() ;
         Collections.sort( currencies ) ;
         return currencies ;
     }
     
-    public static Currency get( String id ) throws Exception {
+    public Currency get( String id ) throws Exception {
         if ( !init ) init() ;
         Currency currency = em.find( Currency.class, id ) ;
         return currency ;
+    }
+    
+    public void get() throws Exception {
+        if ( !init ) init() ;
+        Currency currency = em.find( Currency.class, this.id ) ;
+        this.name = currency.name ;
+        this.sort = currency.sort ;
     }
 }

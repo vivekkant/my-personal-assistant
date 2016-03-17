@@ -8,15 +8,17 @@ public class PersistenceTest {
     
     public static void main(String[] args) throws Exception {
 
+        System.out.println( "----------- currencies by id -----------" ) ;
+        Currency cur = new Currency( "INR" ) ;
+        cur.get() ;
+        System.out.println( cur ) ;
+
         System.out.println( "----------- List of all currencies -----------" ) ;
-        List<Currency> result = Currency.getAll() ;
+        List<Currency> result = cur.getAll() ;
         for ( Currency currency : result ) {
             System.out.println( currency );
         }
         
-        System.out.println( "----------- currencies by id -----------" ) ;
-        Currency indiaCur = Currency.get( "INR" ) ;
-        System.out.println( indiaCur ) ;
     }
 
 }

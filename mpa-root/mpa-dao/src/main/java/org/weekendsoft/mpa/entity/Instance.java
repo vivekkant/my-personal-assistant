@@ -80,10 +80,17 @@ public class Instance extends BaseEntity implements Comparable<Instance> {
             return this.id.compareTo( instance.id ) ;
     }
     
-    public static Instance get( String id ) throws Exception {
+    public Instance get( String id ) throws Exception {
         if ( !init ) init() ;
         Instance instance = em.find( Instance.class, id ) ;
         return instance ;
+    }
+    
+    public void get() throws Exception {
+        if ( !init ) init() ;
+        Instance instance = em.find( Instance.class, this.id ) ;
+        this.name = instance.name ;
+        this.currency = instance.currency ;
     }
     
     public static Instance getDefault() {
