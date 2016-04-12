@@ -21,28 +21,28 @@ import javax.persistence.TypedQuery;
  *
  */
 @Entity
-@Table(name = "bank")
-public class Bank extends BaseEntity implements Comparable<Bank> {
+@Table(name = "category")
+public class Category extends BaseEntity implements Comparable<Category> {
 
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "bank_id")
+    @Column(name = "category_id")
     private int id ;
     
-    @Column(name = "bank_name")
+    @Column(name = "category_name")
     private String name ;
     
     @Column(name = "instance_id" )
     private String instanceId ;
        
-    public Bank( int id ) {
+    public Category( int id ) {
         super() ;
         this.id = id ;
     }
 
-    public Bank() {
+    public Category() {
     	// Default Constructor
     }
     
@@ -72,21 +72,21 @@ public class Bank extends BaseEntity implements Comparable<Bank> {
 
 	@Override
 	public String toString() {
-		return "Bank [id=" + id + ", name=" + name + ", instanceId=" + instanceId + "]";
+		return "Category [id=" + id + ", name=" + name + ", instanceId=" + instanceId + "]";
 	}
     
-    public static Bank get( int id ) throws Exception {
+    public static Category get( int id ) throws Exception {
         if ( !init ) init() ;
-        Bank bank = em.find( Bank.class, id ) ;
-        return bank ;
+        Category category = em.find( Category.class, id ) ;
+        return category ;
     }
     
-    public static Bank getBankByName( String name, String instanceId ) throws Exception {
+    public static Category getCategoryByName( String name, String instanceId ) throws Exception {
     	if ( !init ) init() ;
     	
-    	Bank bank = null ;
+    	Category category = null ;
     	
-    	Query q = em.createQuery( "select a from Bank a where "
+    	Query q = em.createQuery( "select a from Category a where "
     			+ "a.instanceId = :instanceId and "
     			+ "a.name = :name" ) ;
     	
@@ -94,51 +94,51 @@ public class Bank extends BaseEntity implements Comparable<Bank> {
     	q.setParameter( "name", name ) ;
     	q.setMaxResults( 1 ) ;
     	
-    	bank = (Bank) q.getSingleResult() ;
+    	category = (Category) q.getSingleResult() ;
     	
-    	return bank ;
+    	return category ;
     }
     
-    public static List<Bank> getAll( String instanceId ) throws Exception {
+    public static List<Category> getAll( String instanceId ) throws Exception {
     	if ( !init ) init() ;
     	
-    	TypedQuery<Bank> q = em.createQuery( "select a from Bank a where "
-    										  + "a.instanceId = :instanceId", Bank.class ) ;
+    	TypedQuery<Category> q = em.createQuery( "select a from Category a where "
+    										  + "a.instanceId = :instanceId", Category.class ) ;
     	q.setParameter( "instanceId", instanceId ) ;
-    	List<Bank> results = q.getResultList() ;
+    	List<Category> results = q.getResultList() ;
     	
     	return results ;
     }
     
-    public static void create( Bank bank ) throws Exception {
+    public static void create( Category category ) throws Exception {
     	if ( !init ) init() ;
     	em.getTransaction().begin() ;
-    	em.persist( bank ) ;
+    	em.persist( category ) ;
     	em.flush() ;
     	em.getTransaction().commit() ;
     }
 
-    public static void modify( Bank bank ) throws Exception {
+    public static void modify( Category category ) throws Exception {
     	if ( !init ) init() ;
-    	Bank original = em.find( Bank.class, bank.id ) ;
+    	Category original = em.find( Category.class, category.id ) ;
     	em.getTransaction().begin() ;
-    	copy( original, bank ) ;
+    	copy( original, category ) ;
     	em.getTransaction().commit() ;
     }
     
     
-    public static void delete( Bank bank ) throws Exception {
+    public static void delete( Category category ) throws Exception {
     	em.getTransaction().begin() ;
-    	em.remove( bank ) ;
+    	em.remove( category ) ;
     	em.getTransaction().commit() ;
     }
     
-    private static void copy( Bank to, Bank from ) {
+    private static void copy( Category to, Category from ) {
     	to.name 			= from.name ;
     	to.instanceId 		= from.instanceId ;
     }
 
-	public int compareTo( Bank accountType ) {
+	public int compareTo( Category accountType ) {
 		return this.name.compareTo( accountType.name ) ;
 	}
     
