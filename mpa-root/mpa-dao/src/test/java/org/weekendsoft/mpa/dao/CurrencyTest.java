@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.weekendsoft.mpa.entity.Currency;
 
-public class PersistenceTest {
+public class CurrencyTest {
     
     public static void main(String[] args) throws Exception {
 
