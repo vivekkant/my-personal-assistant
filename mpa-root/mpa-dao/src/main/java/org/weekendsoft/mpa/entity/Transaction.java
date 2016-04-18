@@ -213,6 +213,37 @@ public class Transaction extends BaseEntity implements Comparable<Transaction> {
 	public int compareTo( Transaction tran2 ) {
 		return this.recordDate.compareTo( tran2.recordDate ) ;
 	}
+	
+    public static void create( Transaction transaction ) throws Exception {
+    	if ( !init ) init() ;
+    	em.getTransaction().begin() ;
+    	em.persist( transaction ) ;
+    	em.flush() ;
+    	em.getTransaction().commit() ;
+    }
     
+    public static Transaction get( int id ) throws Exception {
+        if ( !init ) init() ;
+        Transaction transaction = em.find( Transaction.class, id ) ;
+        return transaction ;
+    }
+    
+    //TODO All the get combinations
+    
+    public static void modify( Transaction transaction ) throws Exception {
+    	if ( !init ) init() ;
+    	Transaction original = em.find( Transaction.class, transaction.id ) ;
+    	em.getTransaction().begin() ;
+    	em.remove( original ) ;
+    	em.persist( transaction ) ;
+    	em.flush() ;
+    	em.getTransaction().commit() ;
+    }
+    
+    public static void delete( Transaction transaction ) throws Exception {
+    	em.getTransaction().begin() ;
+    	em.remove( transaction ) ;
+    	em.getTransaction().commit() ;
+    }
     
 }
