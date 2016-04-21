@@ -239,7 +239,8 @@ public class Journal extends BaseEntity implements Comparable<Journal> {
     	TypedQuery<Journal> q = em.createQuery( "select j from Journal j where "
     													+ "(j.debitAccount = :debitAccount "
     													+ "or j.creditAccount = :creditAccount) "
-    												+ "and j.instanceId = :instanceId", Journal.class ) ;
+    												+ "and j.instanceId = :instanceId "
+    												+ "order by j.recordDate", Journal.class ) ;
 		q.setParameter( "instanceId", instanceId ) ;
 		q.setParameter( "debitAccount", account ) ;
 		q.setParameter( "creditAccount", account ) ;
