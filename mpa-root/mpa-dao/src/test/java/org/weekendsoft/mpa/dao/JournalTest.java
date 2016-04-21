@@ -4,15 +4,16 @@
 package org.weekendsoft.mpa.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.weekendsoft.mpa.entity.Account;
-import org.weekendsoft.mpa.entity.Transaction;
+import org.weekendsoft.mpa.entity.Journal;
 
 /**
  * @author 212542
  *
  */
-public class TransactionTest {
+public class JournalTest {
 
 	/**
 	 * @param args
@@ -44,25 +45,37 @@ public class TransactionTest {
 		System.out.println( testaccount2 ) ;
 		
 		System.out.println( "----------- Creating transaction -----------" ) ;
-		Transaction tran = new Transaction() ;
-		tran.setFromAccount( testaccount1.getId() ) ;
-		tran.setToAccount( testaccount2.getId() ) ;
-		tran.setAmount( 50.0 ) ;
-		tran.setCurrency( "INR" ) ;
-		tran.setComment( "testing new transaciton " ) ;
-		tran.setRecordDate( new Date() ) ;
-		tran.setStatus( 'U' ) ;
-		tran.setInstanceId( "DEFAULT" ) ;
-		Transaction.create( tran ) ;
-		System.out.println( tran ) ;
+		Journal jentry = new Journal() ;
+		jentry.setDebitAccount( testaccount1.getId() ) ;
+		jentry.setCreditAccount( testaccount2.getId() ) ;
+		jentry.setAmount( 50.0 ) ;
+		jentry.setCurrency( "INR" ) ;
+		jentry.setComment( "testing new transaciton " ) ;
+		jentry.setRecordDate( new Date() ) ;
+		jentry.setStatus( 'U' ) ;
+		jentry.setInstanceId( "DEFAULT" ) ;
+		Journal.create( jentry ) ;
+		System.out.println( jentry ) ;
 		
 		System.out.println( "----------- Updating transaction -----------" ) ;
-		tran.setAmount( 75.0 ) ;
-		Transaction.modify( tran ) ;
-		System.out.println( tran ) ;
+		jentry.setAmount( 75.0 ) ;
+		Journal.modify( jentry ) ;
+		System.out.println( jentry ) ;
+		
+		System.out.println( "----------- List all transaction for debit account -----------" ) ;
+		List<Journal> entries = Journal.getAccountEntries( "DEFAULT", testaccount1.getId() ) ;
+		for( Journal entry : entries ) {
+			System.out.println( entry ) ;
+		}
+
+		System.out.println( "----------- List all transaction for credit account -----------" ) ;
+		List<Journal> entries2 = Journal.getAccountEntries( "DEFAULT", testaccount2.getId() ) ;
+		for( Journal entry : entries2 ) {
+			System.out.println( entry ) ;
+		}
 		
 		System.out.println( "----------- Deleting transaction -----------" ) ;
-		Transaction.delete( tran ) ;
+		Journal.delete( jentry ) ;
 	}
 
 }

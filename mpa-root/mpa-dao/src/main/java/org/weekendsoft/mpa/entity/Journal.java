@@ -4,6 +4,7 @@
 package org.weekendsoft.mpa.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,35 +12,36 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.TypedQuery;
 
 /**
- * Entity Bean for Transaction
+ * Entity Bean for Journal
  * 
  * @author Vivek Kant
  *
  */
 @Entity
-@Table(name = "transaction")
-public class Transaction extends BaseEntity implements Comparable<Transaction> {
+@Table(name = "journal")
+public class Journal extends BaseEntity implements Comparable<Journal> {
 
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "transaction_id")
+    @Column(name = "journal_id")
     private int id ;
     
     @Column(name = "instance_id" )
     private String instanceId ;
 
-    @Column(name = "transaction_parent_id" )
-    private Integer parent ;
+    @Column(name = "compound_entry_id" )
+    private Integer compoundEntry ;
     
-    @Column(name = "from_account_id" )
-    private Integer fromAccount ;
+    @Column(name = "debit_account_id" )
+    private Integer debitAccount ;
     
-    @Column(name = "to_account_id" )
-    private Integer toAccount ;
+    @Column(name = "credit_account_id" )
+    private Integer creditAccount ;
     
     @Column(name = "category_id" )
     private Integer category ;
@@ -73,12 +75,12 @@ public class Transaction extends BaseEntity implements Comparable<Transaction> {
     
     //private 
     
-    public Transaction( int id ) {
+    public Journal( int id ) {
         super() ;
         this.id = id ;
     }
 
-    public Transaction() {
+    public Journal() {
     	// Default Constructor
     }
 
@@ -98,28 +100,28 @@ public class Transaction extends BaseEntity implements Comparable<Transaction> {
 		this.instanceId = instanceId;
 	}
 
-	public Integer getParent() {
-		return parent;
+	public Integer getCompoundEntry() {
+		return compoundEntry;
 	}
 
-	public void setParent(Integer parent) {
-		this.parent = parent;
+	public void setCompoundEntry(Integer compoundEntry) {
+		this.compoundEntry = compoundEntry;
 	}
 
-	public Integer getFromAccount() {
-		return fromAccount;
+	public Integer getDebitAccount() {
+		return debitAccount;
 	}
 
-	public void setFromAccount(Integer fromAccount) {
-		this.fromAccount = fromAccount;
+	public void setDebitAccount(Integer debitAccount) {
+		this.debitAccount = debitAccount;
 	}
 
-	public Integer getToAccount() {
-		return toAccount;
+	public Integer getCreditAccount() {
+		return creditAccount;
 	}
 
-	public void setToAccount(Integer toAccount) {
-		this.toAccount = toAccount;
+	public void setCreditAccount(Integer creditAccount) {
+		this.creditAccount = creditAccount;
 	}
 
 	public Integer getCategory() {
@@ -204,45 +206,61 @@ public class Transaction extends BaseEntity implements Comparable<Transaction> {
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", instanceId=" + instanceId + ", parent=" + parent + ", fromAccount="
-				+ fromAccount + ", toAccount=" + toAccount + ", category=" + category + ", subCategory=" + subCategory
-				+ ", amount=" + amount + ", currency=" + currency + ", bill=" + bill + ", recordDate=" + recordDate
-				+ ", comment=" + comment + ", number=" + number + ", status=" + status + ", split=" + split + "]";
+		return "Journal [id=" + id + ", instanceId=" + instanceId + ", compoundEntry=" + compoundEntry
+				+ ", debitAccount=" + debitAccount + ", creditAccount=" + creditAccount + ", category=" + category
+				+ ", subCategory=" + subCategory + ", amount=" + amount + ", currency=" + currency + ", bill=" + bill
+				+ ", recordDate=" + recordDate + ", comment=" + comment + ", number=" + number + ", status=" + status
+				+ ", split=" + split + "]";
 	}
 
-	public int compareTo( Transaction tran2 ) {
+	public int compareTo( Journal tran2 ) {
 		return this.recordDate.compareTo( tran2.recordDate ) ;
 	}
 	
-    public static void create( Transaction transaction ) throws Exception {
+    public static void create( Journal journalEntry ) throws Exception {
     	if ( !init ) init() ;
     	em.getTransaction().begin() ;
-    	em.persist( transaction ) ;
+    	em.persist( journalEntry ) ;
     	em.flush() ;
     	em.getTransaction().commit() ;
     }
     
-    public static Transaction get( int id ) throws Exception {
+    public static Journal get( int id ) throws Exception {
         if ( !init ) init() ;
-        Transaction transaction = em.find( Transaction.class, id ) ;
-        return transaction ;
+        Journal journalEntry = em.find( Journal.class, id ) ;
+        return journalEntry ;
     }
     
-    //TODO All the get combinations
-    
-    public static void modify( Transaction transaction ) throws Exception {
+    // Get all entries for an account
+    public static List<Journal> getAccountEntries( String instanceId, int account ) throws Exception {
     	if ( !init ) init() ;
-    	Transaction original = em.find( Transaction.class, transaction.id ) ;
+    	List<Journal> entries = null ;
+    	
+    	TypedQuery<Journal> q = em.createQuery( "select j from Journal j where "
+    													+ "(j.debitAccount = :debitAccount "
+    													+ "or j.creditAccount = :creditAccount) "
+    												+ "and j.instanceId = :instanceId", Journal.class ) ;
+		q.setParameter( "instanceId", instanceId ) ;
+		q.setParameter( "debitAccount", account ) ;
+		q.setParameter( "creditAccount", account ) ;
+		entries = q.getResultList() ;
+		
+    	return entries ;
+    }
+    
+    public static void modify( Journal journalEntry ) throws Exception {
+    	if ( !init ) init() ;
+    	Journal original = em.find( Journal.class, journalEntry.id ) ;
     	em.getTransaction().begin() ;
     	em.remove( original ) ;
-    	em.persist( transaction ) ;
+    	em.persist( journalEntry ) ;
     	em.flush() ;
     	em.getTransaction().commit() ;
     }
     
-    public static void delete( Transaction transaction ) throws Exception {
+    public static void delete( Journal journalEntry ) throws Exception {
     	em.getTransaction().begin() ;
-    	em.remove( transaction ) ;
+    	em.remove( journalEntry ) ;
     	em.getTransaction().commit() ;
     }
     
