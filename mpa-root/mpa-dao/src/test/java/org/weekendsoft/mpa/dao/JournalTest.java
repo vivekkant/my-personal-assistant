@@ -76,6 +76,9 @@ public class JournalTest {
 		
 		System.out.println( "----------- Deleting transaction -----------" ) ;
 		Journal.delete( jentry ) ;
+		
+		Account.delete( testaccount1 ) ;
+		Account.delete( testaccount2 ) ;
 	}
 
 }

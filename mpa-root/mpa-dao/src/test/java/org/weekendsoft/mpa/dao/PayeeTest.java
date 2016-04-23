@@ -64,7 +64,8 @@ public class PayeeTest {
 			System.out.println( at ) ;
 		}
 		
-		//TODO Clean up category & sub cateogory
+		SubCategory.delete( subcategory ) ;
+		Category.delete( category ) ;
 	}
 
 }

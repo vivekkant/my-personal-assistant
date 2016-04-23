@@ -61,7 +61,7 @@ public class SubCategoryTest {
 			System.out.println( sc ) ;
 		}
 		
-		//TODO Clean up category & sub cateogory
+		Category.delete( category ) ;
 	}
 
 }
