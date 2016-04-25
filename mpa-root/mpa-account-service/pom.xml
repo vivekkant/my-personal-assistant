@@ -20,7 +20,7 @@
 	</properties>
 	
 	<build>
-		<finalName>accounts</finalName>
+		<finalName>accounting</finalName>
 		<plugins>
 			<plugin>
 			   <groupId>org.apache.maven.plugins</groupId>
@@ -43,7 +43,7 @@
 				<configuration>
 					<url>http://localhost:8080/manager/text</url>
 					<server>Tomcat</server>
-					<path>/accounts</path>
+					<path>/accounting</path>
 				</configuration>
 			</plugin>
 		  </plugins>
@@ -84,6 +84,12 @@
 			<version>2.4.1</version>
 		</dependency>
 		
+		<dependency>
+		  <groupId>org.modelmapper</groupId>
+		  <artifactId>modelmapper</artifactId>
+		  <version>0.7.5</version>
+		</dependency>
+		
 		<!-- Spring 3 dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -102,7 +108,18 @@
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+			<exclusions>
+ 			   <exclusion>
+ 			      <groupId>commons-logging</groupId>
+ 			      <artifactId>commons-logging</artifactId>
+ 			   </exclusion>
+ 			</exclusions>				
+		</dependency>
 	
 		<!-- Logging Library -->
 		<dependency>

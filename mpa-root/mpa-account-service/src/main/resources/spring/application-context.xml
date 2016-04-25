@@ -12,5 +12,8 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd">
  
+	<context:component-scan base-package="org.codingpedia.demo.rest.*" />
+	
+    <!--  <bean id="podcastRestService" class="org.codingpedia.demo.rest.service.PodcastRestService" />  -->
 
 </beans>
