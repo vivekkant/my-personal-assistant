@@ -16,7 +16,7 @@ public class Account {
     public static final String DEFAULT_EXPENSE_ACCOUNT = "DEFAULT_EXPENSE" ;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     
     private String name ;
