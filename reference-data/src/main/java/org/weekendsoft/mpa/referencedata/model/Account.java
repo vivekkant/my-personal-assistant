@@ -1,27 +1,41 @@
 package org.weekendsoft.mpa.referencedata.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 /**
  * @author Vivek Kant
  */
+@Entity
 public class Account {
 
     public static final String DEFAULT_INCOME_ACCOUNT = "DEFAULT_INCOME" ;
     public static final String DEFAULT_EXPENSE_ACCOUNT = "DEFAULT_EXPENSE" ;
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id ;
     
     private String name ;
     
+    @Column(name = "INSTANCE_ID")
     private String instanceId ;
     
+    @Column(name = "ACCOUNT_TYPE_ID")
     private Integer accountTypeId ;
     
+    @Column(name = "BANK_ID")
     private Integer bankId ;
     
+    @Column(name = "CURRENCY_ID")
     private String currencyId ;
     
     private boolean internal ;
     
+    @Column(name = "INITIAL_BALANCE")
     private double initialBalance ;
     
     public Account(int id, String name, String instanceId, Integer accountTypeId, Integer bankId, String currencyId,
