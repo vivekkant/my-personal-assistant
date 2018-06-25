@@ -20,6 +20,11 @@ import org.weekendsoft.mpa.referencedata.model.Account;
 @RequestMapping("api/v1/")
 public class AccountController {
 	
+	@RequestMapping("")
+	public String home() {
+		return "Home URL of Accounts";
+	}
+	
 	@RequestMapping(value = "accounts", method = RequestMethod.GET)
 	public List<Account> list() {
 		return AccountStub.list();
