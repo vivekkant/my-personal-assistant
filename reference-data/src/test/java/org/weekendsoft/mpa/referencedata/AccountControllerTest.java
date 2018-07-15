@@ -1,7 +1,9 @@
 package org.weekendsoft.mpa.referencedata;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +36,7 @@ public class AccountControllerTest {
 		Account acc = ac.get(1);
 		
 		verify(accountRepository).findOne(1);
-		assertEquals(1, acc.getId());
+		//assertEquals(1, acc.getId());
+		assertThat(acc.getId(), is(1));
 	}
 }
