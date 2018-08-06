@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.weekendsoft.mpa.masterdata.App;
 import org.weekendsoft.mpa.masterdata.model.Account;
 import org.weekendsoft.mpa.masterdata.repository.AccountRepository;
 
