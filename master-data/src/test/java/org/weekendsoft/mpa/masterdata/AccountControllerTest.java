@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata;
+package org.weekendsoft.mpa.masterdata;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -10,9 +10,9 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.weekendsoft.mpa.referencedata.controller.AccountController;
-import org.weekendsoft.mpa.referencedata.model.Account;
-import org.weekendsoft.mpa.referencedata.repository.AccountRepository;
+import org.weekendsoft.mpa.masterdata.controller.AccountController;
+import org.weekendsoft.mpa.masterdata.model.Account;
+import org.weekendsoft.mpa.masterdata.repository.AccountRepository;
 
 public class AccountControllerTest {
 	

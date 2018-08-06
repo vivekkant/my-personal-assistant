@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata.config;
+package org.weekendsoft.mpa.masterdata.config;
 
 import javax.sql.DataSource;
 

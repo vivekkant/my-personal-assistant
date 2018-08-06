@@ -1,7 +1,7 @@
-package org.weekendsoft.mpa.referencedata.repository;
+package org.weekendsoft.mpa.masterdata.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.weekendsoft.mpa.referencedata.model.Account;
+import org.weekendsoft.mpa.masterdata.model.Account;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 

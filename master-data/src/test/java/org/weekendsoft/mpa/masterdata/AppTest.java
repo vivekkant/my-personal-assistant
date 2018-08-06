@@ -1,9 +1,9 @@
-package org.weekendsoft.mpa.referencedata;
+package org.weekendsoft.mpa.masterdata;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.weekendsoft.mpa.referencedata.controller.HomeController;
+import org.weekendsoft.mpa.masterdata.controller.HomeController;
 
 public class AppTest {
 

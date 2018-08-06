@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata.controller;
+package org.weekendsoft.mpa.masterdata.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.weekendsoft.mpa.referencedata.model.Account;
+import org.weekendsoft.mpa.masterdata.model.Account;
 
 public class AccountStub {
 	

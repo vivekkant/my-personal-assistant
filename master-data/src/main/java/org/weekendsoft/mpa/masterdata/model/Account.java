@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata.model;
+package org.weekendsoft.mpa.masterdata.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

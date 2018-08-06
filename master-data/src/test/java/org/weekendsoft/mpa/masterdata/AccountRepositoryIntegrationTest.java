@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata;
+package org.weekendsoft.mpa.masterdata;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -11,8 +11,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.weekendsoft.mpa.referencedata.model.Account;
-import org.weekendsoft.mpa.referencedata.repository.AccountRepository;
+import org.weekendsoft.mpa.masterdata.App;
+import org.weekendsoft.mpa.masterdata.model.Account;
+import org.weekendsoft.mpa.masterdata.repository.AccountRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(App.class)

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.weekendsoft.mpa.referencedata.controller;
+package org.weekendsoft.mpa.masterdata.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.weekendsoft.mpa.referencedata.model.Account;
-import org.weekendsoft.mpa.referencedata.repository.AccountRepository;
+import org.weekendsoft.mpa.masterdata.model.Account;
+import org.weekendsoft.mpa.masterdata.repository.AccountRepository;
 
 /**
  * @author Vivek Kant

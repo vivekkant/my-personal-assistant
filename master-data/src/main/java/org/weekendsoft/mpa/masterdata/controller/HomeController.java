@@ -1,4 +1,4 @@
-package org.weekendsoft.mpa.referencedata.controller;
+package org.weekendsoft.mpa.masterdata.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
