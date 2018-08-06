@@ -12,8 +12,8 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 
-    public static final String DEFAULT_INCOME_ACCOUNT = "DEFAULT_INCOME" ;
-    public static final String DEFAULT_EXPENSE_ACCOUNT = "DEFAULT_EXPENSE" ;
+    public static final String DEFAULT_INCOME_ACCOUNT = "INCOME" ;
+    public static final String DEFAULT_EXPENSE_ACCOUNT = "EXPENSE" ;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
