@@ -17,20 +17,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.weekendsoft.mpa.masterdata.exception.ERROR_CODES;
 import org.weekendsoft.mpa.masterdata.exception.RecordNotFoundException;
-import org.weekendsoft.mpa.masterdata.model.Account;
+import org.weekendsoft.mpa.masterdata.model.Category;
 import org.weekendsoft.mpa.masterdata.model.ErrorInfo;
-import org.weekendsoft.mpa.masterdata.repository.AccountRepository;
+import org.weekendsoft.mpa.masterdata.repository.CategoryRepository;
 
 /**
  * @author Vivek Kant
  *
  */
 @RestController
-@RequestMapping("api/v1/accounts")
-public class AccountController {
+@RequestMapping("api/v1/categories")
+public class CategoryController {
 	
 	@Autowired
-	private AccountRepository accountRepository;
+	private CategoryRepository categoryRepository;
 	
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(RecordNotFoundException.class)
@@ -41,42 +41,43 @@ public class AccountController {
         error.setStatus(HttpStatus.NOT_FOUND);
         return error;
     }
+
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Account> list() {
-		return accountRepository.findAll();
+	public List<Category> list() {
+		return categoryRepository.findAll();
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Account create(@RequestBody Account account) {
-		return accountRepository.saveAndFlush(account);
+	public Category create(@RequestBody Category category) {
+		return categoryRepository.saveAndFlush(category);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Account get(@PathVariable int id) {
-		Account account = accountRepository.findOne(id);
-		if (account == null) throw new RecordNotFoundException(id, "Account ID not found: " + id, null);
+	public Category get(@PathVariable int id) {
+		Category category = categoryRepository.findOne(id);
+		if (category == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
 		
-		return account;
+		return category;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Account update(@PathVariable int id, @RequestBody Account account) {
-		Account existingAccount = accountRepository.findOne(id);
-		if (existingAccount == null) throw new RecordNotFoundException(id, "Account ID not found: " + id, null);
+	public Category update(@PathVariable int id, @RequestBody Category category) {
+		Category existingCategory = categoryRepository.findOne(id);
+		if (existingCategory == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
 		
-		BeanUtils.copyProperties(account, existingAccount);
-		account.setId(id);
-		return accountRepository.saveAndFlush(existingAccount);
+		BeanUtils.copyProperties(category, existingCategory);
+		category.setId(id);
+		return categoryRepository.saveAndFlush(existingCategory);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public Account delete(@PathVariable int id) {
-		Account existingAccount = accountRepository.findOne(id);
-		if (existingAccount == null) throw new RecordNotFoundException(id, "Account ID not found: " + id, null);
+	public Category delete(@PathVariable int id) {
+		Category existingCategory = categoryRepository.findOne(id);
+		if (existingCategory == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
 		
-		accountRepository.delete(existingAccount);
-		return existingAccount;
+		categoryRepository.delete(existingCategory);
+		return existingCategory;
 	}
 	
 }
