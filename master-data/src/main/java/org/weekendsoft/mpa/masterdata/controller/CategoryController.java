@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.weekendsoft.mpa.masterdata.exception.ERROR_CODES;
 import org.weekendsoft.mpa.masterdata.exception.RecordNotFoundException;
 import org.weekendsoft.mpa.masterdata.model.Category;
+import org.weekendsoft.mpa.masterdata.model.CategoryStructure;
 import org.weekendsoft.mpa.masterdata.model.ErrorInfo;
 import org.weekendsoft.mpa.masterdata.repository.CategoryRepository;
+import org.weekendsoft.mpa.masterdata.service.CategoryService;
 
 /**
  * @author Vivek Kant
@@ -31,6 +34,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private CategoryService categoryService;
 	
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(RecordNotFoundException.class)
@@ -44,8 +50,9 @@ public class CategoryController {
 
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<Category> list() {
-		return categoryRepository.findAll();
+	public List<CategoryStructure> list() {
+		List<Category> subCategories = categoryRepository.findAll();
+		return categoryService.createCategoryStructure(subCategories);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
