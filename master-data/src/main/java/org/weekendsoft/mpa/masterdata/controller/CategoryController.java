@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.weekendsoft.mpa.masterdata.exception.ERROR_CODES;
 import org.weekendsoft.mpa.masterdata.exception.RecordNotFoundException;
+import org.weekendsoft.mpa.masterdata.model.SubCategory;
 import org.weekendsoft.mpa.masterdata.model.Category;
-import org.weekendsoft.mpa.masterdata.model.CategoryStructure;
 import org.weekendsoft.mpa.masterdata.model.ErrorInfo;
 import org.weekendsoft.mpa.masterdata.repository.CategoryRepository;
 import org.weekendsoft.mpa.masterdata.service.CategoryService;
@@ -48,43 +48,19 @@ public class CategoryController {
         return error;
     }
 
-	
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public SubCategory create(@RequestBody Category category) {
+		SubCategory defaultSubCategory = new SubCategory();
+		defaultSubCategory.setCategoryName(category.getCategoryName());
+		defaultSubCategory.setSubCategoryName(Category.DEFAULT_SUB_CATEGORY);
+		return categoryRepository.saveAndFlush(defaultSubCategory);
+	}
+
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<CategoryStructure> list() {
-		List<Category> subCategories = categoryRepository.findAll();
+	public List<Category> list() {
+		List<SubCategory> subCategories = categoryRepository.findAll();
 		return categoryService.createCategoryStructure(subCategories);
 	}
 
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public Category create(@RequestBody Category category) {
-		return categoryRepository.saveAndFlush(category);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Category get(@PathVariable int id) {
-		Category category = categoryRepository.findOne(id);
-		if (category == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
-		
-		return category;
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Category update(@PathVariable int id, @RequestBody Category category) {
-		Category existingCategory = categoryRepository.findOne(id);
-		if (existingCategory == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
-		
-		BeanUtils.copyProperties(category, existingCategory);
-		category.setId(id);
-		return categoryRepository.saveAndFlush(existingCategory);
-	}
-	
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public Category delete(@PathVariable int id) {
-		Category existingCategory = categoryRepository.findOne(id);
-		if (existingCategory == null) throw new RecordNotFoundException(id, "Category ID not found: " + id, null);
-		
-		categoryRepository.delete(existingCategory);
-		return existingCategory;
-	}
 	
 }

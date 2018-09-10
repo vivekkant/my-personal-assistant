@@ -14,8 +14,10 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	   @Override
 	   protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+		   	
+		   
 			ErrorInfo error = new ErrorInfo();
-			error.setCode(ERROR_CODES.RECORD_NOT_FOUND);
+			error.setCode(ERROR_CODES.BAD_REQUEST);
 			error.setMessage("Malformed JSON request");
 			error.setStatus(HttpStatus.BAD_REQUEST);
 			return buildResponseEntity(error);

@@ -1,60 +1,42 @@
 package org.weekendsoft.mpa.masterdata.model;
 
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  * @author Vivek Kant
  */
-@Entity
 public class Category {
 
-    public static final String DEFAULT_CATEGORY = "DEFAULT" ;
+    public static final String DEFAULT_SUB_CATEGORY = "DEFAULT" ;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
-    
-    @Column(name = "CATEGORY_NAME")
     private String categoryName;
-    
-    @Column(name = "SUB_CATEGORY_NAME")
-    private String subCategoryName;
-    
-    @Column(name = "INSTANCE_ID")
-    private String instanceId ;
-    
-    private boolean internal ;
+    private List<SubCategory> subCategories;
 
-    
-    public Category(int id, String categoryName, String subCategoryName, String instanceId, boolean internal) {
-		super();
-		this.id = id;
+    public Category(String categoryName) {
+    	super();
 		this.categoryName = categoryName;
-		this.subCategoryName = (subCategoryName == null) ? DEFAULT_CATEGORY : subCategoryName;
-		this.instanceId = instanceId;
-		this.internal = internal;
-	}
-
-    public Category( int id ) {
-        super() ;
-        this.id = id ;
+		this.subCategories = new ArrayList<SubCategory>();
     }
-
-    public Category() {
-    	// Default Constructor
+    
+    public Category(String categoryName, List<SubCategory> subCategories) {
+		super();
+		this.categoryName = categoryName;
+		this.subCategories = filterCategories(subCategories);
+	}
+    
+    private List<SubCategory> filterCategories(List<SubCategory> original) {
+    	List<SubCategory> subCategories = new ArrayList<SubCategory>();
+    	for (SubCategory cat : original) {
+    		if (this.categoryName.equals(cat.getCategoryName())) {
+    			subCategories.add(cat);
+    		}
+    	}
+    	
+    	return subCategories;
     }
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getCategoryName() {
 		return categoryName;
@@ -64,37 +46,22 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
-	public String getSubCategoryName() {
-		return subCategoryName;
+	public List<SubCategory> getSubCategories() {
+		return subCategories;
+	}
+	
+	public void addSubCategory(SubCategory cat) {
+		this.subCategories.add(cat);
 	}
 
-	public void setSubCategoryName(String subCategoryName) {
-		this.subCategoryName = subCategoryName;
-	}
-
-	public String getInstanceId() {
-		return instanceId;
-	}
-
-	public void setInstanceId(String instanceId) {
-		this.instanceId = instanceId;
-	}
-
-	public boolean isInternal() {
-		return internal;
-	}
-
-	public void setInternal(boolean internal) {
-		this.internal = internal;
+	public void setSubCategories(List<SubCategory> subCategories) {
+		this.subCategories = subCategories;
 	}
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", categoryName=" + categoryName + ", subCategoryName=" + subCategoryName
-				+ ", instanceId=" + instanceId + ", internal=" + internal + "]";
+		return "CategoryStructure [categoryName=" + categoryName + ", subCategories=" + subCategories + "]";
 	}
-    
 
-    
 }
 
