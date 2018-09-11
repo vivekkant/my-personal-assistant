@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.weekendsoft.mpa.masterdata.exception.ERROR_CODES;
 import org.weekendsoft.mpa.masterdata.exception.RecordNotFoundException;
 import org.weekendsoft.mpa.masterdata.model.SubCategory;
+import org.weekendsoft.mpa.masterdata.model.Account;
 import org.weekendsoft.mpa.masterdata.model.Category;
 import org.weekendsoft.mpa.masterdata.model.ErrorInfo;
 import org.weekendsoft.mpa.masterdata.repository.CategoryRepository;
@@ -35,32 +36,32 @@ public class CategoryController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	@Autowired
-	private CategoryService categoryService;
-	
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(RecordNotFoundException.class)
 	public ErrorInfo handleException(RecordNotFoundException ex) {
         ErrorInfo error = new ErrorInfo();
         error.setCode(ERROR_CODES.RECORD_NOT_FOUND);
-        error.setMessage("Record with id: " + ex.id);
+        error.setMessage("Record with name: " + ex.name);
         error.setStatus(HttpStatus.NOT_FOUND);
         return error;
     }
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public SubCategory create(@RequestBody Category category) {
-		SubCategory defaultSubCategory = new SubCategory();
-		defaultSubCategory.setCategoryName(category.getCategoryName());
-		defaultSubCategory.setSubCategoryName(Category.DEFAULT_SUB_CATEGORY);
-		return categoryRepository.saveAndFlush(defaultSubCategory);
+	public Category create(@RequestBody Category category) {
+		return categoryRepository.saveAndFlush(category);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Category> list() {
-		List<SubCategory> subCategories = categoryRepository.findAll();
-		return categoryService.createCategoryStructure(subCategories);
+		return categoryRepository.findAll();
 	}
 
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	public Category get(@PathVariable String name) {
+		Category category = categoryRepository.findOne(name);
+		if (category == null) throw new RecordNotFoundException(name, "Category with name not found: " + name, null);
+		
+		return category;
+	}
 	
 }

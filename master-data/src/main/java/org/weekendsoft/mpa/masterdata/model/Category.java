@@ -1,66 +1,74 @@
 package org.weekendsoft.mpa.masterdata.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Vivek Kant
  */
+@Entity
 public class Category {
 
-    public static final String DEFAULT_SUB_CATEGORY = "DEFAULT" ;
-    
-    private String categoryName;
-    private List<SubCategory> subCategories;
-
-    public Category(String categoryName) {
-    	super();
-		this.categoryName = categoryName;
-		this.subCategories = new ArrayList<SubCategory>();
-    }
-    
-    public Category(String categoryName, List<SubCategory> subCategories) {
-		super();
-		this.categoryName = categoryName;
-		this.subCategories = filterCategories(subCategories);
-	}
-    
-    private List<SubCategory> filterCategories(List<SubCategory> original) {
-    	List<SubCategory> subCategories = new ArrayList<SubCategory>();
-    	for (SubCategory cat : original) {
-    		if (this.categoryName.equals(cat.getCategoryName())) {
-    			subCategories.add(cat);
-    		}
-    	}
-    	
-    	return subCategories;
-    }
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
-	public List<SubCategory> getSubCategories() {
-		return subCategories;
-	}
+	@Id
+	@Column(name = "CATEGORY_NAME")
+    private String name;
 	
-	public void addSubCategory(SubCategory cat) {
-		this.subCategories.add(cat);
+	@Column(name = "CATEGORY_DESC")
+    private String description;
+	
+    @Column(name = "INSTANCE_ID")
+    private String instanceId ;
+
+    public Category() {
+    	super();
+    }
+    
+    public Category(String name) {
+    	super();
+		this.name = name;
+    }
+
+    public Category(String name, String description) {
+    	super();
+		this.name = name;
+		this.description = description;;
+    }
+    
+    public Category(String name, String description, String instanceId) {
+    	super();
+		this.name = name;
+		this.description = description;
+		this.instanceId = instanceId;
+    }
+
+	public String getName() {
+		return name;
 	}
 
-	public void setSubCategories(List<SubCategory> subCategories) {
-		this.subCategories = subCategories;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getInstanceId() {
+		return instanceId;
+	}
+
+	public void setInstanceId(String instanceId) {
+		this.instanceId = instanceId;
 	}
 
 	@Override
 	public String toString() {
-		return "CategoryStructure [categoryName=" + categoryName + ", subCategories=" + subCategories + "]";
+		return "Category [name=" + name + ", description=" + description + ", instanceId=" + instanceId + "]";
 	}
 
 }
